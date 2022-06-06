@@ -22,14 +22,14 @@ def is_cc(sub_graph): #to check connectivity
     return True
 
 
-def is_exist(n, sub_graph, all_sub_graphs):
+def is_exist(n, sub_graph, sub_graphs_list):
     vertices = range(1, n + 1)
     for permutation in iter.permutations(vertices):
         ver_combinations = {}
         for i, j in enumerate(permutation):
             ver_combinations[i+1]=j
         sub_graph_combinations = sorted(list(tuple((ver_combinations[edge[0]], ver_combinations[edge[1]]) for edge in sub_graph)))
-        if sub_graph_combinations in all_sub_graphs:
+        if sub_graph_combinations in sub_graphs_list:
             return True
     return False
 
@@ -49,12 +49,12 @@ def get_sub_graphs(n):
         for ver_b in vertices_list:
             if ver_a != ver_b:
                 all_edges.append((ver_a,ver_b))
-    all_sub_graphs = []
+    sub_graphs_list = []
     for number_of_edges in range(n-1, n*(n-1) + 1):
         sub_graphs_of_number_of_edges = list(iter.combinations(all_edges, number_of_edges))
         for sub_graph in sub_graphs_of_number_of_edges:
-            if not is_exist(n, list(sub_graph), all_sub_graphs) and has_all_vertices(vertices_list, list(sub_graph)) and is_cc(list(sub_graph)):
-                all_sub_graphs.append(list(sub_graph))
+            if not is_exist(n, list(sub_graph), sub_graphs_list) and has_all_vertices(vertices_list, list(sub_graph)) and is_cc(list(sub_graph)):
+                sub_graphs_list.append(list(sub_graph))
 
 
 
